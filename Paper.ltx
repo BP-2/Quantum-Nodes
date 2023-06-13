@@ -1,0 +1,172 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{authblk}
+\usepackage{setspace}
+\usepackage[margin=1.25in]{geometry}
+\usepackage{graphicx}
+\graphicspath{ {./figures/} }
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{lineno}
+\linenumbers
+
+%%%%%% Bibliography %%%%%%
+% Replace "sample" in the \addbibresource line below with the name of your .bib file.
+\usepackage[style=nejm, 
+citestyle=numeric-comp,
+sorting=none]{biblatex}
+\addbibresource{sample.bib}
+
+%%%%%% Title %%%%%%
+% Full titles can be a maximum of 15 words. 
+% Title Format: Use title case, capitalizing the first letter of each word, except for certain small words, such as articles and short prepositions
+\title{Relationships of Quantum Noise Between Trusted Nodes in Quantum Networks}
+
+%%%%%% Authors %%%%%%
+% Authors should be listed in order of contribution to the paper, by first name, then middle initial (if any), followed by last name.
+% Authors should be listed in the order in which they will appear in the published version if the manuscript is accepted. 
+% Use an asterisk (*) to identify the corresponding author, and be sure to include that person’s e-mail address. Use symbols (in this order: †, ‡, §, ||, ¶, #, ††, ‡‡, etc.) for author notes, such as present addresses, “These authors contributed equally to this work” notations, and similar information.
+% You can include group authors, but please include a list of the actual authors (the group members) in the Supplementary Materials.
+\author[1*$\dag$]{Phelps, LaGarde}
+
+%%%%%% Date %%%%%%
+% Date is optional
+\date{}
+
+%%%%%% Spacing %%%%%%
+% Use paragraph spacing of 1.5 or 2 (for double spacing, use command \doublespacing)
+\onehalfspacing
+\begin{document}
+
+\maketitle
+
+\subsection*{Linear Paths Calculations}
+
+\medskip To calculate the total quantum noise across a linear series of trusted nodes in a quantum network we will use a comprehensive parallel formula know as the Product Formula. This simple mathematical formula is used when the individual error rates between the different nodes is known. For the derivation of the following equation (e.i The Product Formula), we will assume that each channel in the quantum network has statistical independence. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{linear-diagram}
+    \caption{This represents a linear quantum network where data flows from user A to each ensuing T node, and eventually to B.}
+    \label{fig:1}
+\end{figure}
+
+\medskip N corresponds to the total number of arcs -1, $Q_{i}$ corresponds to the total noise at arc i, and $Q_{t}$ represents the total quantum noise in system.
+Equation \ref{eq:1} represents an upper bound for maximum noise induced represented as a fraction of 1.
+
+\begin{equation} \label{eq:1}
+    Upper bound = 1-\prod_{i=0}^N (1-Q_i) = Q_t
+\end{equation}
+
+\subsection*{Example 1}
+Using the numbers provided in Figure, we can test Equation \ref{eq:1} for the upper bound.
+\begin{enumerate}
+  \item 1-($Q_{0}$) = 1-.04 = .96
+  \item .96 * (1-($Q_{1}$) = 1-.03 = .97) = .97*.96 = .9312
+  \item .9312 * (1-($Q_{2}$) = 1-.5 = .5) = .9312 * .5 = .4656
+  \item 1-.4656 = .5344 = $Q_{t}$
+\end{enumerate}
+
+\medskip The following equation is used when calculating total average noise across a linear system of nodes at current arc i.  To use equation, one must find $\forall i \in [0,S-1] QA_i$ where S is the desired arc at which to find quantum noise.  This is due to the recursive nature of this formula which needs previous calculations to determine the current average noise.  N represents one less than the total number of arcs, $Q_i$ is the noise at arc i, $QA_i$ corresponds tot he total average noise at arc i, and $QA_0$ will always be $Q_0$.
+
+\begin{equation} \label{eq:2}
+    QA_i - (QA_i * Q_{i+1}) + ((1-QA_i)*Q_{i+1}) = QA_{i+1} 
+\end{equation}
+\begin{equation} \label{eq:3}
+    Total Average Noise = Q_{t} = QA_N
+\end{equation}
+
+\subsection*{Example 2}
+Using the numbers provided in Figure 1, we can test Equation \ref{eq:2} for the total average noise 
+
+\begin{enumerate}
+  \item .04 = $QA_0$
+  \item .04-(.04*.03)+((1-.04)*.03) = .0676 = $QA_1$
+  \item .0676 - (.0676*.50)+((1-.0676)*.50) = .50 = $QA_2$
+  \item We only have three arcs, therefore, $QA_N$ = $Q_{t}$ = $QA_2$ = .5
+\end{enumerate}
+
+\medskip In Quantum Key Distribution (QKD) the noise between each channel is not generally considered independent but is assumed to simplify the analysis and calculation. Assuming independence between the noisy channels  is a common and intuitive method.
+
+
+\subsection*{Parallel Paths Calculations}
+\begin{figure*}[h!]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/parallel-diagram.png}
+    \caption{This represents a simple parallel quantum network where data flows from user A to each ensuing T node, and eventually to B.}
+    \label{fig:2}
+\end{figure*}
+
+\medskip Equation \ref{eq:4} represents average noise for a network of parallel paths.
+
+\medskip $Q_{t}$ corresponds to the total average noise.  $W_{i}$ represents the weight of path i.  $Q_{avg,i}$ is the total average noise of path i.  $NumBits_{i}$ and $TotalBits$ represent the number of bits on path i and total bits sent on the network to calculate the weight.
+\begin{equation} \label{eq:4}
+    Q_{t} = W_1 (Q_{avg,1}) + W_2(Q_{avg,2}) + ...
+\end{equation}
+\begin{equation} \label{eq:5}
+    W_{i} = \frac{NumBits_i}{TotalBits}
+\end{equation}
+
+\subsection*{Example 3}
+Using the numbers provided in Figure 2, we can test Equation \ref{eq:4} for the total average noise in the network.  Let's assume two bits were sent in the top route, and one bit was sent via the bottom route.
+
+\begin{enumerate}
+  \item First, calculate the total average noise for the top route
+    \begin{enumerate}
+        \item .08 = $QA_0$
+        \item .08-(.08*.06)+((1-.08)*.06) = .1304 = $QA_1$
+        \item .1304-(.1304*.11)+((1-.1304)*.11) = .211712 = $QA_2$ = $QA_{avg,1}$
+    \end{enumerate}
+  \item Second, calculate the total average noise for the bottom route
+  \begin{enumerate}
+        \item .12 = $QA_0$
+        \item .12-(.12*.1)+((1-.12)*.10) = .196 = $QA_1$
+        \item .196-(.196*.14)+((1-.196)*.14) = .28112 = $QA_2$ = $QA_{avg,2}$ 
+    \end{enumerate}
+  \item Calculate weight using number of bits on each path over total number of bits
+  \begin{enumerate}
+      \item $W_1$ = $\frac{2}{3}$
+      \item $W_2$ = $\frac{1}{3}$
+  \end{enumerate}
+  \item Plug in values to Equation \ref{eq:4} and find $Q_t$ for the network.
+  \begin{enumerate}
+      \item $Q_t$ = $\frac{2}{3}$(.211712) + $\frac{1}{3}$(.28112) = .234848
+  \end{enumerate}
+\end{enumerate}
+
+\subsection*{Branching Parallel Paths Calculations}
+\medskip Due to the nature of Quantum networks, while one path is being used, it cannot be used by other network calls.  This leads to unused paths, and complicates things when calculations are run for finding the average quantum noise over a network.
+
+\medskip So, the flow of Qubits depends on which protocols being used, let's introduce a few.
+
+\subsection{Singular Optimal Path}
+\medskip This can be found through a variety of different formulas, for this instance we will use Dynamic Programming techniques which were first introduced by Richard Bellman to solve for the least noisy path in a network.  For this example, dynamic programming with backtracking shall be implemented, this has a run time of O(n).
+\subsection*{Example 4}
+
+\begin{figure*}[h!]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/branching.png}
+    \caption{This represents a simple parallel quantum network where data flows from user A to each ensuing T node, and eventually to B.  However, this figure contains a branching path.}
+    \label{fig:3}
+\end{figure*}
+
+\begin{figure*}[h!]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/dynamic1.png}
+    \caption{This dynamic programming utilizes backwards induction.  We can see that here in this figure as we start from our endpoint (B) and highlight the paths leading to B ($Q_{02}$ and $Q_{12}$).}
+    \label{fig:4}
+\end{figure*}
+\begin{figure*}[h!]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/dynamic2.png}
+    \caption{Next we find the cheapest path to the next nodes that are conencted by our highlighted path.  For instance, for our top path, we can see that $Q_{01}$ was favored over $Q_{03}$.  This is because the two possible routes are $Q_{12}$ + $Q_{03}$ and $Q_{02}$ + $Q_{01}$.  When we find the minimum of these two routes, we can see .14 + .05 $>$ .11 + .06.}
+    \label{fig:5}
+\end{figure*}
+\begin{figure*}[h!]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/dynamic3.png}
+    \caption{Now we have found our final, most optimal route.  The final calculation for this finds $Q_{02}$ + $Q_{01}$ + $Q_{00}$ to be less than  $Q_{12}$ + $Q_{11}$ + $Q_{11}$.  Alternatively, .11 + .06 + .08 $<$ .12 + .1 + .14.}
+    \label{fig:6}
+\end{figure*}
+
+\end{document}
