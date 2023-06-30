@@ -16,7 +16,6 @@ startNode = Node("startNode", [])
 ## ending node
 endNode = Node("endNode", [], True)
 
-
 while i < numPaths:
   tempNodes = int(input("How many trusted nodes are in path: " + str(i+1)))
   numNodesPath.append(tempNodes)
@@ -59,6 +58,7 @@ while i < numPaths:
 ## Display current independent noises and add to averages array
 i = 0
 averages = []
+
 # print("Individual approximate noise percent of path: " + str(i+1) + " "+ str(linear_formula_indexed(startNode.nextNodes[0], startNode.arcs[0].noise)[0]))
 # print("Individual approximate noise percent of path: " + str(i+2) + " " +str(linear_formula_indexed(startNode.nextNodes[1], startNode.arcs[1].noise)[0]))
 
