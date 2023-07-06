@@ -7,8 +7,8 @@ from IPython.display import display
 
 # First entanglement based BB84 protocol is done and leaves us with a Bell State which represents AT AT and TB TB
 
+print( "a1 is bit error for channel 1, b1 is phase error for channel 1, a2 is bit error for channel 2, b2 is phase error for channel 2")
 # Let us first prompt users for a and b values for Phi (for both Phi)
-
 a = int(input("Please give value of a1"))
 b = int(input("Please give value of b1"))
 a_two = int(input("Please give value of a2"))
@@ -69,7 +69,7 @@ print(qc_one)
 
 # For this we need only check one instance, due to linearity, result should hold for all instances ****
 
-a = int(input("Select which of the tensor products you would like to map (index from zero)"))
+a = int(input("Select which of the shown tensor products you would like to map (index from zero)"))
 
 original_arr = []
 
