@@ -86,6 +86,7 @@ original_arr.append(int(original_arr[0]%10))
 original_arr.pop(0)
 original_arr.reverse()
 
+print("Mapping: |a,t1,t2,b> => |a,t1,t2,t1 XOR t2, b XOR t1 XOR t2>")
 print("Original values" + str(original_arr))
 
 def map_func(original):
