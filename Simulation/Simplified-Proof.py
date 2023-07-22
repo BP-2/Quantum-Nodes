@@ -14,8 +14,31 @@ while x < 4:
     values.append(val)
     x += 1
 
+
+# Lets solve !!!
 if measure == "z" and (values[0] == "+" or values[0] == "-"):
     print("Broken case")
+    
+    expanded_values = []
+    # First we have to break '+' and '-' into |0> + |1> and |0> - |1> respectively
+    for val in values:
+        if val == "+":
+            expanded_values.append("|0> + |1>")
+        else:
+            expanded_values.append("|0> - |1>")
+    print(expanded_values)
+
+#XOR qiskit time !
+            
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 elif measure == "z" and (values[0] == "1" or values[0] == "0"):
     classical_bit = int(values[1]) ^ int(values[2])
