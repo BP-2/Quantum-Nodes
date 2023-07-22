@@ -14,6 +14,15 @@ b = int(input("Please give value of b1"))
 a_two = int(input("Please give value of a2"))
 b_two = int(input("Please give value of b2"))
 
+# measure_one = int(input("Please type 1 for Z measurement for Alice, 2 for X measurement"))
+# measure_two = int(input("Please type 1 for Z measurement for Trusted Node (1), 2 for X measurement"))
+# measure_three = int(input("Please type 1 for Z measurement for Trusted Node (2), 2 for X measurement"))
+# measure_four = int(input("Please type 1 for Z measurement for Bob, 2 for X measurement"))
+
+
+
+
+
 # Now we take these value and create Bell states based on the input
 
 qc_one = QuantumCircuit(2,2)
