@@ -1,9 +1,5 @@
 # BP-2
 # Simulation of the simplified proof (abstract)
-from qiskit import * 
-from qiskit.tools.visualization import plot_histogram
-from IPython.display import display
-
 
 # First we get the measurement that we will be performing on our values
 measure = input("Please type 'x' or 'z' for our measurement basis")
