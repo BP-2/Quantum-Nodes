@@ -30,7 +30,7 @@ if measure == "z" and (values[0] == "+" or values[0] == "-"):
     for val in values:
         if val == "+":
             qc.h(counter)
-            #expanded_values.append(qc)
+            # expanded_values.append(qc)
             # expanded_values.append("|0> + |1>")
         else:
             qc.x(counter)
@@ -44,7 +44,7 @@ if measure == "z" and (values[0] == "+" or values[0] == "-"):
     #     job_result = job.result()
     #     print(job_result.get_statevector(x))
 
-    #XOR qiskit time !
+    # XOR qiskit time !
     # To implement XOR, we can CNOT the second bit with the target bit, and then CNOT the third bit with the target bit
     qc.cx(1,4)
     qc.cx(2,4)
@@ -54,12 +54,7 @@ if measure == "z" and (values[0] == "+" or values[0] == "-"):
     job = aer_sim.run(qc)
     print(job.result().get_counts())
     print(qc)
-    
-    
-    
     # 00, - 01 + 10
-    
-    
     
     
 elif measure == "z" and (values[0] == "1" or values[0] == "0"):
@@ -119,3 +114,9 @@ elif measure == "x" and (values[0] == "1" or values[0] == "0"):
     print(job.result().get_counts())
     print(qc)
         
+
+
+
+# TODO 
+# Large simulation that actually does the stuff
+# E91 or Bell exchange handoff + Simplified proof (maybe combine noise)
