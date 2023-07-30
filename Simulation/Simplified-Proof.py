@@ -1,7 +1,5 @@
 # BP-2
 # Simulation of the simplified proof
-
-
 from qiskit import * 
 from qiskit.tools.visualization import plot_histogram
 from IPython.display import display
