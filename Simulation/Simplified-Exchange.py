@@ -146,34 +146,120 @@ if measure != prepare_a:
     # First we have to break '+' and '-' into |0> + |1> and |0> - |1> respectively
     expanded_values = []
     counter = 0
-    while counter < 4:
+    while counter < 3:
+        tempVal = []
         if values[counter] == "0":
-            values[counter] = "+"
+            # 0 reading in x basis is +
+            # values[counter] = "|0> + |1>"
+            tempVal.append(0)
+            tempVal.append(1)
+            expanded_values.append(tempVal)
+            
         elif values[counter] == "1":
-            values[counter] = "-"
+            # 1 reading in x basis is -
+            # values[counter] = "|0> - |1>"
+            tempVal.append(0)
+            tempVal.append(-1)
+            expanded_values.append(tempVal)
         elif values[counter] == "+":
-            values[counter] = "0"
+            # + reading in z basis is +
+            # values[counter] = "|0> + |1>"
+            tempVal.append(0)
+            tempVal.append(1)
+            expanded_values.append(tempVal)
+            print("hit")
         elif values[counter] == "-":
-            values[counter] = "1"
+            # - reading in z basis is -
+            # values[counter] = "|0> - |1>"
+            tempVal.append(0)
+            tempVal.append(-1)
+            expanded_values.append(tempVal)
         elif values[counter] == "1z":
-            values[counter] = "-"
+            # 1 reading in x basis is -
+            # values[counter] = "|0> - |1>"
+            tempVal.append(0)
+            tempVal.append(-1)
+            expanded_values.append(tempVal)
         elif values[counter] == "0z":
-            values[counter] = "+"
+            # 0 reading in x basis is +
+            # values[counter] = "|0> + |1>"
+            tempVal.append(0)
+            tempVal.append(1)
+            expanded_values.append(tempVal)
         elif values[counter] == "+x":
-            values[counter] = "0"
+            # + reading in z basis is +
+            # values[counter] = "|0> + |1>"
+            tempVal.append(0)
+            tempVal.append(1)
+            expanded_values.append(tempVal)
         elif values[counter] == "-x":
-            values[counter] = "-1"
-        
+            # -x read in the z basis is different, when a bit flip is applied to the - state, it changes the state unlike the other values
+            #values[counter] = "-|0> + |1>" #bro what
+            tempVal.append(-0)
+            tempVal.append(1)
+            expanded_values.append(tempVal)
         counter += 1
+        # Now we only need to deal with the middle two terms
+    # We will tensor the two terms together
+    index = 1
+    inner_index = 0
+    tensor_values = []
+
+    temp_val = []
+    temp_val.append(expanded_values[index][inner_index])
+    temp_val.append(expanded_values[index+1][inner_index])
+    tensor_values.append(temp_val)
+    temp_val = []
+    temp_val.append(expanded_values[index][inner_index])
+    temp_val.append(expanded_values[index+1][inner_index + 1])
+    tensor_values.append(temp_val)
+    temp_val = []
+    temp_val.append(expanded_values[index][inner_index+1])
+    temp_val.append(expanded_values[index+1][inner_index])
+    tensor_values.append(temp_val)
+    temp_val = []
+    temp_val.append(expanded_values[index][inner_index+1])
+    temp_val.append(expanded_values[index+1][inner_index+1])
+    tensor_values.append(temp_val)
+        
+    zero_ends = []
+    one_ends = []
+    # Now we take the parity of the bits (ignoring sign)
+    for x in tensor_values:
+        parity = abs(x[0]) ^ abs(x[1])
+        x.append(parity)
+        if parity == 1:
+            one_ends.append(x)
+        else:
+            zero_ends.append(x)
+        
+    # for x in tensor_values:
+    #     print(x)
+        
+    # Now we condense like terms
+    condensed_vals = []
     
-
-
-
-
-
-
-
-
-
-
-
+    term = "("
+    if ((zero_ends[0][0] < 0 or zero_ends[0][1] < 0) and zero_ends[0][0] * zero_ends[0][1] <= 0):
+        term += "(-)"
+    term += "|" + str(zero_ends[0][0]) + str(zero_ends[0][1])+"> +"
+    if ((zero_ends[1][0] < 0 or zero_ends[1][1] < 0) and zero_ends[1][0] * zero_ends[1][1] <= 0):
+        term += "(-)"
+    term += "|" + str(abs(zero_ends[1][0])) + str(abs(zero_ends[1][1]))+">)|0>"
+    condensed_vals.append(term)
+    
+    term = "("
+    if ((one_ends[0][0] < 0 or one_ends[0][1] < 0) and one_ends[0][0] * one_ends[0][1] <= 0):
+        term += "(-)"
+    term += "|" + str(abs(one_ends[0][0])) + str(abs(one_ends[0][1]))+"> +"
+    if ((one_ends[1][0] < 0 or one_ends[1][1] < 0) and one_ends[1][0] * one_ends[1][1] <= 0):
+        term += "(-)"
+    term += "|" + str(abs(one_ends[1][0])) + str(abs(one_ends[1][1]))+">)|1>"
+    condensed_vals.append(term)
+    
+    print("Since we are measuring in mismatched basis for qubits prepared in the X basis, we follow the following formula for mapping our states...")
+    print("|i,j> => (|00>+(i*j)|11>)|0>, ((j)|01>+(i)|10>)|1>")
+    for x in condensed_vals:
+        print(x)    
+    # 00, - 01 + 10
+  

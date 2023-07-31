@@ -101,7 +101,7 @@ if (measure == "z" and (values[0] == "+" or values[0] == "-") or (measure == "x"
     term += "|" + str(abs(one_ends[1][0])) + str(abs(one_ends[1][1]))+">)|1>"
     condensed_vals.append(term)
     
-    print("Since we are measuring in the Z basis for qubits prepared in the X basis, we follow the following formula for mapping our states...")
+    print("Since we are measuring in mismatched basis for qubits prepared in the X basis, we follow the following formula for mapping our states...")
     print("|i,j> => (|00>+(i*j)|11>)|0>, ((j)|01>+(i)|10>)|1>")
     for x in condensed_vals:
         print(x)    
