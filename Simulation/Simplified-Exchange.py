@@ -194,9 +194,9 @@ if measure != prepare_a:
             expanded_values.append(tempVal)
         elif values[counter] == "-x":
             # -x read in the z basis is different, when a bit flip is applied to the - state, it changes the state unlike the other values
-            #values[counter] = "-|0> + |1>" #bro what
-            tempVal.append(-0)
-            tempVal.append(1)
+            #values[counter] = "-|0> + |1>" #bro what: DOESNT MATTER DUE TO LINEARITY 
+            tempVal.append(0)
+            tempVal.append(-1)
             expanded_values.append(tempVal)
         counter += 1
         # Now we only need to deal with the middle two terms
