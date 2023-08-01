@@ -233,9 +233,6 @@ if measure != prepare_a:
         else:
             zero_ends.append(x)
         
-    # for x in tensor_values:
-    #     print(x)
-        
     # Now we condense like terms
     condensed_vals = []
     
